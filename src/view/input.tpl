@@ -1,44 +1,68 @@
 {strip}
-	{if $attributes|filled && $attributes.name|filled}
+
+	{if $fields->isNotEmpty() && $fields->get('name')}
 		<div class="border-bottom border-light py-3">
-			<div class="row align-items-center">
-				<div class="
-						{if $attributes.horizontal} col-12 {else} col-md-2 {/if}
-					"
-				>
+			<div class="row align-items-center {if $fields->get('gutters')} {$fields->get('gutters')}{/if}">
 
-					<label for="{$attributes.name|md5}" class="d-flex font-weight-normal justify-content-between">
-						<span>{$attributes.label|default:$attributes.title|default:$attributes.name|default:'Title'}</span>
-						{if $attributes.help|filled}
-							<i class="fa fa-info-circle fa-sm text-muted pophover" data-position="bottom left" data-html="{$attributes.help}"></i>
-						{/if}
-					</label>
-				</div>
+				{if $fields->get('title')}
+					<div class="{if $fields->get('horizontal')} col-12 {else} col-md-2 {/if}">
 
-				<div class="{if $attributes.horizontal} col-12 {else} col-md {/if}">
-					<div class="input-group input-group-{$attributes.size|default:'md'}">
+						<label for="{$fields->get('name')|md5}" class="d-flex font-weight-normal justify-content-between">
 
-						{if $attributes.prepend|filled}
+							<span>
+								{if $fields->get('icon') && $fields->get('iconInside') != true}
+									<i class="{$fields->get('icon')} me-1 mr-1"></i>
+								{/if}
+								{$fields->get('title')}
+							</span>
+
+							{if $fields->get('horizontal') == true &&
+								$fields->get('helpBottom') != true &&
+								$fields->get('help')
+							}
+								<i class="fa fa-info-circle fa-sm text-muted pophover" data-position="bottom left" data-html="{$fields->get('help')}"></i>
+							{/if}
+						</label>
+					</div>
+				{/if}
+
+				<div class="{if $fields->get('horizontal')} col-12 {else} col-md {/if}">
+					<div class="input-group input-group-{$fields->get('size', 'md')} position-relative">
+
+						{if $fields->get('prepend')}
 							<div class="input-group-prepend">
 								<div class="input-group-text">
-									{$attributes.prepend}
+									{$fields->get('prepend')}
 								</div>
 							</div>
 						{/if}
 
+						{if $fields->get('type') != 'file' && $fields->get('icon') && $fields->get('iconInside') == true}
+							<span class="position-absolute start-0 top-50 translate-middle-y p-2" style="z-index:9;">
+								<i class="{$fields->get('icon')} fa-sm text-muted"></i>
+							</span>
+						{/if}
+
 						<input
-							type="{$attributes.type|default:'text'}"
-							class="{$attributes.class|default:'form-control'}"
-							name="{$attributes.name|default:''}"
-							id="{$attributes.name|md5}"
-							placeholder="{$attributes.placeholder}"
-							{if $attributes.required|filled} required {/if}
-							{if $attributes.value|filled} value="{$attributes.value}" {/if}
+							type="{$fields->get('type', 'text')}"
+							class="{$fields->get('class', 'form-control')} {if $fields->get('type') != 'file' && $fields->get('iconInside') == true} ps-4 ms-1{/if}"
+							name="{$fields->get('name')}"
+							id="{$fields->get('name')|md5}"
+							{if $fields->get('placeholder')} placeholder="{$fields->get('placeholder')}"{/if}
+							{if $fields->get('required')} required {/if}
+							{if $fields->get('value')} value="{$fields->get('value')}" {/if}
+							{if $fields->get('accept') && $fields->get('type') == 'file'} accept="{$fields->get('accept')}" {/if}
 						/>
 
-						{if $attributes.append|filled}
+						{if $fields->get('help') && $fields->get('helpBottom') == true}
+							<small class="valid-feedback d-block text-body">
+								{$fields->get('help')}
+							</small>
+						{/if}
+
+						{if $fields->get('append')}
 							<div class="input-group-append">
-								<span class="input-group-text">{$attributes.append}</span>
+								<span class="input-group-text">{$fields->get('append')}</span>
 							</div>
 						{/if}
 					</div>
@@ -47,4 +71,4 @@
 			</div>
 		</div>
 	{/if}
-	{/strip}
+{/strip}

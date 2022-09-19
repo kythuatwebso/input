@@ -24,6 +24,10 @@ class Input
         'placeholder',
         'value',
         'append',
+        'icon',
+        'accept',
+        'gutters',
+        'rowClass',
     ];
 
     public function __construct($name)
@@ -77,10 +81,10 @@ class Input
      * @param boolean $value
      * @return $this
      */
-    protected function setAttributeBool($boolean = true)
+    protected function setAttributeBool($key, $value = true)
     {
-        if (is_bool($boolean)) {
-            $this->setAttribute('horizontal', $boolean);
+        if (is_bool($value)) {
+            $this->setAttribute($key, $value);
         }
 
         return $this;
@@ -94,7 +98,18 @@ class Input
      */
     public function horizontal($horizontal = true)
     {
-        return $this->setAttributeBool($horizontal);
+        return $this->setAttributeBool('horizontal', $horizontal);
+    }
+
+    /**
+     * Set label & input two 2 row
+     *
+     * @param boolean $stacked
+     * @return $this
+     */
+    public function stacked($stacked = true)
+    {
+        return $this->horizontal($stacked);
     }
 
     /**
@@ -105,7 +120,57 @@ class Input
      */
     public function required($required = true)
     {
-        return $this->setAttributeBool($required);
+        return $this->setAttributeBool('required', $required);
+    }
+
+    /**
+     * Help text to bottom
+     *
+     * @param boolean $helpBottom
+     * @return $this
+     */
+    public function helpBottom($helpBottom = true)
+    {
+        return $this->setAttributeBool('helpBottom', $helpBottom);
+    }
+
+    /**
+     * Đặt icon bên trong ô input
+     *
+     * @param boolean $iconInside
+     * @return $this
+     */
+    public function iconInside($iconInside = true)
+    {
+        return $this->setAttributeBool('iconInside', $iconInside);
+    }
+
+    /**
+     * Xử lý dữ liệu Alias
+     *
+     * @return void
+     */
+    public function aliasExec()
+    {
+        if (! Arr::get($this->attributes, 'label') && Arr::get($this->attributes, 'title')) {
+            Arr::set($this->attributes, 'label', Arr::get($this->attributes, 'title'));
+        }
+
+        if (! Arr::get($this->attributes, 'title') && Arr::get($this->attributes, 'label')) {
+            Arr::set($this->attributes, 'title', Arr::get($this->attributes, 'label'));
+        }
+
+        if (Arr::get($this->attributes, 'icon')) {
+            $awesomeHasPrefix = Str::contains($this->attributes['icon'], ['fa fa-', 'fas fa-', 'far fa-', 'fal fa-','fad fa-',]);
+
+            if (! $awesomeHasPrefix) {
+                $this->attributes['icon'] = sprintf('fa %s', $this->attributes['icon']);
+            }
+        }
+
+        if (! Arr::get($this->attributes, 'gutters') && Arr::get($this->attributes, 'rowClass')) {
+            $this->attributes['gutters'] = Arr::get($this->attributes, 'rowClass');
+        }
     }
 
     /**
@@ -123,9 +188,11 @@ class Input
             throw new \RuntimeException("function render_template not exitst");
         }
 
+        $this->aliasExec();
+
         return render_template(
             $this->fileView,
-            ['attributes' => $this->attributes]
+            ['fields' => collect($this->attributes)]
         );
     }
 
