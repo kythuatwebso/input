@@ -1,5 +1,4 @@
 {strip}
-
 	{if $fields->isNotEmpty() && $fields->get('name')}
 		<div class="border-bottom border-light py-3">
 			<div class="row align-items-center {if $fields->get('gutters')} {$fields->get('gutters')}{/if}">
@@ -27,7 +26,7 @@
 				{/if}
 
 				<div class="{if $fields->get('horizontal')} col-12 {else} col-md {/if}">
-					<div class="input-group input-group-{$fields->get('size', 'md')} position-relative">
+					<div class="{if $fields->get('prepend') || $fields->get('append')} input-group {/if} input-group-{$fields->get('size', 'md')} position-relative">
 
 						{if $fields->get('prepend')}
 							<div class="input-group-prepend">
@@ -37,7 +36,12 @@
 							</div>
 						{/if}
 
-						{if $fields->get('type') != 'file' && $fields->get('icon') && $fields->get('iconInside') == true}
+						{if
+							$fields->get('type') != 'file' &&
+							! $fields->get('prepend') &&
+							$fields->get('icon') &&
+							$fields->get('iconInside') == true
+						}
 							<span class="position-absolute start-0 top-50 translate-middle-y p-2" style="z-index:9;">
 								<i class="{$fields->get('icon')} fa-sm text-muted"></i>
 							</span>
@@ -45,7 +49,7 @@
 
 						<input
 							type="{$fields->get('type', 'text')}"
-							class="{$fields->get('class', 'form-control')} {if $fields->get('type') != 'file' && $fields->get('iconInside') == true} ps-4 ms-1{/if}"
+							class="{$fields->get('class', 'form-control')} {if $fields->get('type') != 'file' && $fields->get('iconInside') == true && ! $fields->get('prepend')} ps-4 ms-1{/if}"
 							name="{$fields->get('name')}"
 							id="{$fields->get('name')|md5}"
 							{if $fields->get('placeholder')} placeholder="{$fields->get('placeholder')}"{/if}
