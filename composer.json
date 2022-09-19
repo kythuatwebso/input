@@ -1,0 +1,18 @@
+{
+    "name": "websovn/input",
+    "description": "kythuatwebso",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Webso\\": "src/"
+        }
+    },
+    "authors": [{
+        "name": "kythuatwebso"
+    }],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "1.0",
+    "require": {}
+}
