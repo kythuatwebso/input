@@ -74,3 +74,21 @@ Suffix của input
 ->append(string $append)
 ```
 
+Thêm icon cho input
+```
+->icon(string $iconClass)
+```
+
+Kiểu file đc phép chọn (chỉ áp dụng cho kiểu file)
+```
+->accept(string $fileType)
+```
+
+Set Class cho div row
+```
+->gutters(string $class)
+```
+hoặc
+```
+->rowClass(string $class)
+```
