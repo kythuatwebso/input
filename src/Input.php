@@ -28,6 +28,7 @@ class Input
         'accept',
         'gutters',
         'rowClass',
+        'wrapClass',
     ];
 
     public function __construct($name)
@@ -59,6 +60,40 @@ class Input
     public static function make($name)
     {
         return new static($name);
+    }
+
+    /**
+     * Set Attribute input
+     *
+     * @param string $key
+     * @param mixed $value
+     * @param string $keyTag
+     * @return $this
+     */
+    public function setAttr($key, $value, $keyTag = 'attr')
+    {
+        $key   = (string) e(Str::of($key)->trim()->stripTags());
+        $value = (string) e(Str::of($value)->trim()->stripTags());
+
+        $this->attributes[$keyTag] = sprintf('%s="%s"', $key, $value);
+
+        return $this;
+    }
+
+    /**
+     * set data attribute
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return $this
+     */
+    public function dataAttr($key, $value)
+    {
+        if (! Str::contains($key, 'data-')) {
+            $key = sprintf('data-%s', $key);
+        }
+
+        return $this->setAttr($key, $value, 'dataAttr');
     }
 
     /**

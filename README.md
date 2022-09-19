@@ -92,3 +92,13 @@ hoặc
 ```
 ->rowClass(string $class)
 ```
+
+Set data-*
+```
+->dataAttr(string $key, mixed $value)
+```
+
+Set Attribute
+```
+->setAttr(string $key, mixed $value)
+```

@@ -1,6 +1,6 @@
 {strip}
 	{if $fields->isNotEmpty() && $fields->get('name')}
-		<div class="border-bottom border-light py-3">
+		<div class="{$fields->get('wrapClass', 'border-bottom border-light py-3')}">
 			<div class="row align-items-center {if $fields->get('gutters')} {$fields->get('gutters')}{/if}">
 
 				{if $fields->get('title')}
@@ -49,13 +49,15 @@
 
 						<input
 							type="{$fields->get('type', 'text')}"
-							class="{$fields->get('class', 'form-control')} {if $fields->get('type') != 'file' && $fields->get('iconInside') == true && ! $fields->get('prepend')} ps-4 ms-1{/if}"
+							class="{$fields->get('class', 'form-control')} {if $fields->get('type') != 'file' && $fields->get('icon') && $fields->get('iconInside') == true && ! $fields->get('prepend')} ps-4 ms-1{/if}"
 							name="{$fields->get('name')}"
 							id="{$fields->get('name')|md5}"
 							{if $fields->get('placeholder')} placeholder="{$fields->get('placeholder')}"{/if}
 							{if $fields->get('required')} required {/if}
 							{if $fields->get('value')} value="{$fields->get('value')}" {/if}
 							{if $fields->get('accept') && $fields->get('type') == 'file'} accept="{$fields->get('accept')}" {/if}
+							{if $fields->get('dataAttr')} {$fields->get('dataAttr')} {/if}
+							{if $fields->get('attr')} {$fields->get('attr')} {/if}
 						/>
 
 						{if $fields->get('help') && $fields->get('helpBottom') == true}
