@@ -1,7 +1,21 @@
 {strip}
 	{if $fields->isNotEmpty() && $fields->get('name')}
-		<div class="{$fields->get('wrapClass', 'border-bottom border-light py-3')}">
-			<div class="row align-items-center {if $fields->get('gutters')} {$fields->get('gutters')}{/if}">
+
+		<div class="
+				{if $fields->get('type') != 'hidden'}
+					{$fields->get('wrapClass', 'border-bottom border-light py-3')}
+				{else}
+					invisible
+				{/if}
+			"
+		>
+			
+			<div class="row align-items-center 
+					{if $fields->get('gutters')} 
+						{$fields->get('gutters')}
+					{/if}
+				"
+			>
 
 				{if $fields->get('title')}
 					<div class="{if $fields->get('horizontal')} col-12 {else} col-md-2 {/if}">
