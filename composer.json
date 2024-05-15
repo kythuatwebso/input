@@ -12,6 +12,5 @@
         "name": "kythuatwebso"
     }],
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "version": "v1.4.1"
+    "prefer-stable": true
 }
