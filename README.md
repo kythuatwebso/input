@@ -4,7 +4,7 @@ Input Template
 
 ### Install
 ```
-composer require websovn/input
+composer require friendsofwebso/input
 ```
 
 ### Method
